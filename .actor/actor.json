@@ -1,15 +1,15 @@
 {
-	"actorSpecification": 1,
-	"name": "tootoot-actor",
-	"title": "Tootoot.fm Scraper",
-	"description": "Scrape events and prices from Tootoot.fm!",
-	"version": "0.1",
+    "actorSpecification": 1,
+    "name": "tootoot-actor",
+    "title": "Tootoot.fm Scraper",
+    "description": "Scrape events and prices from Tootoot.fm!",
+    "version": "0.1",
     "storages": {
         "dataset": "./dataset_schema.json"
     },
-	"meta": {
-		"templateId": "ts-crawlee-cheerio"
-	},
-	"input": "./input_schema.json",
-	"dockerfile": "../Dockerfile"
+    "meta": {
+        "templateId": "ts-crawlee-cheerio"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "../Dockerfile"
 }

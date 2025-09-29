@@ -1,31 +1,24 @@
-import { EVENT_API_URL_PREFIX, EVENT_URL_PREFIX, IMAGE_URL_PREFIX } from "./const.js";
-import type { EventURLOptions } from "./types.js";
+import { EVENT_API_URL_PREFIX, EVENT_URL_PREFIX, IMAGE_URL_PREFIX } from './const.js';
+import type { EventURLOptions } from './types.js';
 
 export function getEventLink(eventId: string): string {
     return `${EVENT_URL_PREFIX}/${eventId}`;
 }
 
 export function getImageURL(eventId: string, shareImage: string): string {
-    return `${IMAGE_URL_PREFIX}/${eventId}/${shareImage}.jpg`
+    return `${IMAGE_URL_PREFIX}/${eventId}/${shareImage}.jpg`;
 }
 
-export function buildEventURL({
-  page = 0,
-  since,
-  till,
-  limit = 100,
-  cityId,
-  categoryId
-}: EventURLOptions = {}) {
+export function buildEventURL({ page = 0, since, till, limit = 100, cityId, categoryId }: EventURLOptions = {}) {
     const queryParams = new URLSearchParams();
 
-    queryParams.append("page", String(page));
-    queryParams.append("perPage", String(limit));
-    queryParams.append("cityId", cityId ?? "");
-    queryParams.append("categories", categoryId ?? "");
-    queryParams.append("since", since ?? "");
-    queryParams.append("till", till ?? "");
-    queryParams.append("withoutStream", "true");
+    queryParams.append('page', String(page));
+    queryParams.append('perPage', String(limit));
+    queryParams.append('cityId', cityId ?? '');
+    queryParams.append('categories', categoryId ?? '');
+    queryParams.append('since', since ?? '');
+    queryParams.append('till', till ?? '');
+    queryParams.append('withoutStream', 'true');
 
     return `${EVENT_API_URL_PREFIX}?${queryParams.toString()}`;
 }
@@ -34,7 +27,7 @@ export function buildEventURL({
 function formatFromMsWithOffset(ms: number, offsetSeconds: number): string {
     const shifted = new Date(ms + offsetSeconds * 1000);
 
-    const pad = (n: number) => String(n).padStart(2, "0");
+    const pad = (n: number) => String(n).padStart(2, '0');
     const Y = shifted.getUTCFullYear();
     const M = pad(shifted.getUTCMonth() + 1);
     const D = pad(shifted.getUTCDate());
@@ -42,7 +35,7 @@ function formatFromMsWithOffset(ms: number, offsetSeconds: number): string {
     const m = pad(shifted.getUTCMinutes());
     const s = pad(shifted.getUTCSeconds());
 
-    const sign = offsetSeconds >= 0 ? "+" : "-";
+    const sign = offsetSeconds >= 0 ? '+' : '-';
     const absSec = Math.abs(offsetSeconds);
     const offH = pad(Math.floor(absSec / 3600));
     const offM = pad(Math.floor((absSec % 3600) / 60));
@@ -56,7 +49,7 @@ function formatFromMsWithOffset(ms: number, offsetSeconds: number): string {
  */
 export function isoWithOffset(utcIso: string, offsetSeconds: number): string {
     const ms = Date.parse(utcIso);
-    if (Number.isNaN(ms)) throw new Error("Invalid ISO date");
+    if (Number.isNaN(ms)) throw new Error('Invalid ISO date');
     return formatFromMsWithOffset(ms, offsetSeconds);
 }
 

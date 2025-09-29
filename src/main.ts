@@ -10,13 +10,13 @@ await Actor.init();
 // Parse input
 const { since, till } = (await Actor.getInput()) as Input;
 const sinceISO = rawToLocalISOString(since, false);
-const tillISO  = rawToLocalISOString(till, true);
+const tillISO = rawToLocalISOString(till, true);
 
 const crawler = new CheerioCrawler({
-    requestHandler: router
+    requestHandler: router,
 });
 
-const initUrl = buildEventURL({ since: sinceISO, till: tillISO })
+const initUrl = buildEventURL({ since: sinceISO, till: tillISO });
 await crawler.run([
     {
         url: initUrl,
@@ -25,7 +25,7 @@ await crawler.run([
             since: sinceISO,
             till: tillISO,
         },
-    }
+    },
 ]);
 
 await Actor.exit();

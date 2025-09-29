@@ -55,22 +55,23 @@ router.addDefaultHandler(async ({ request, log, json, addRequests }) => {
             contacts,
             misc: {
                 imageUrl: getImageURL(event._id, event.ShareImage),
-            }
+            },
         });
     }
 
-
     const nextPage = request.userData.page + 1;
-    await addRequests([{
-        url: buildEventURL({
-            page: nextPage,
-            since: request.userData.since,
-            till: request.userData.till
-        }),
-        userData: {
-            page: nextPage,
-            since: request.userData.since,
-            till: request.userData.till
-        }
-    }]);
+    await addRequests([
+        {
+            url: buildEventURL({
+                page: nextPage,
+                since: request.userData.since,
+                till: request.userData.till,
+            }),
+            userData: {
+                page: nextPage,
+                since: request.userData.since,
+                till: request.userData.till,
+            },
+        },
+    ]);
 });
