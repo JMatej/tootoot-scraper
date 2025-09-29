@@ -1,0 +1,21 @@
+{
+    "title": "Tootoot.fm Input Schema",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "since": {
+            "title": "Since",
+            "type": "string",
+            "description": "Filter events starting from this date (inclusive).",
+            "editor": "datepicker",
+            "nullable": true
+        },
+        "till": {
+            "title": "Till",
+            "type": "string",
+            "description": "Filter events until this date (inclusive).",
+            "editor": "datepicker",
+            "nullable": true
+        }
+    }
+}
