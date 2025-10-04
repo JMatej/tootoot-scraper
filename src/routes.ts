@@ -1,23 +1,25 @@
-import { createCheerioRouter, Dataset } from 'crawlee';
+import { Actor } from 'apify';
+import { createCheerioRouter } from 'crawlee';
 
-import type { EmailContact, EventResponse, PhoneContact, WebContact } from './types.js';
-import { buildEventURL, getEventLink, getImageURL, isoWithOffset } from './utils.js';
+import { EVENT_URL_PREFIX, IMAGE_URL_PREFIX, PAGE_LIMIT } from './const.js';
+import type { EmailContact, EventResponse, PhoneContact, UserData, WebContact } from './types.js';
+import { buildEventUrl, isoWithOffset } from './utils.js';
 
 export const router = createCheerioRouter();
 
-router.addDefaultHandler(async ({ request, log, json, addRequests }) => {
-    log.info(`Processing: ${request.url}`);
-    log.info(`Page: ${request.userData.page}`);
-
+router.addDefaultHandler<UserData>(async ({ request, log, json, addRequests }) => {
     // Cast the untyped `json` to our new typed interface
     const events = json as EventResponse[];
 
     if (events.length === 0) {
-        log.info('No more pagination, exiting.');
+        log.info(`[Page: ${request.userData.page}]: No more pagination, exiting.`);
         return;
     }
 
-    for (const eventResponse of events) {
+    const eventsToPush = [];
+    const pageOffset = request.userData.page * PAGE_LIMIT;
+
+    for (const [index, eventResponse] of events.entries()) {
         const { Event: event } = eventResponse;
 
         const contactsArr = Array.isArray(event.Contacts) ? event.Contacts : [];
@@ -32,19 +34,19 @@ router.addDefaultHandler(async ({ request, log, json, addRequests }) => {
             website: webContact?.Url || null,
         };
 
-        await Dataset.pushData({
+
+        eventsToPush.push({
             id: event._id,
-            event: {
-                link: getEventLink(event._id),
-                name: event.ProfileName,
-                about: event.About,
-                keywords: event.Keywords,
-                begin: isoWithOffset(event.Begin, event.TimeZone),
-                end: isoWithOffset(event.End, event.TimeZone),
-                currency: event.Currency,
-                minPrice: event.MinPrice,
-                maxPrice: event.MaxPrice,
-            },
+            url: `${EVENT_URL_PREFIX}/${event._id}`,
+            name: event.ProfileName,
+            about: event.About,
+            keywords: event.Keywords,
+            begin: isoWithOffset(event.Begin, event.TimeZone),
+            end: isoWithOffset(event.End, event.TimeZone),
+            currency: event.Currency,
+            minPrice: event.MinPrice,
+            maxPrice: event.MaxPrice,
+            rankPosition: pageOffset + index + 1,
             location: {
                 building: event.Building.ProfileName,
                 street: event.AddressContact.AddressLine,
@@ -53,16 +55,18 @@ router.addDefaultHandler(async ({ request, log, json, addRequests }) => {
                 country: event.AddressContact.Country,
             },
             contacts,
-            misc: {
-                imageUrl: getImageURL(event._id, event.ShareImage),
-            },
+            imageUrl: `${IMAGE_URL_PREFIX}/${event._id}/${event.ShareImage}.jpg`,
         });
+    }
+
+    if (eventsToPush.length > 0) {
+        await Actor.pushData(eventsToPush);
     }
 
     const nextPage = request.userData.page + 1;
     await addRequests([
         {
-            url: buildEventURL({
+            url: buildEventUrl({
                 page: nextPage,
                 since: request.userData.since,
                 till: request.userData.till,
@@ -71,7 +75,9 @@ router.addDefaultHandler(async ({ request, log, json, addRequests }) => {
                 page: nextPage,
                 since: request.userData.since,
                 till: request.userData.till,
-            },
+            } satisfies UserData,
         },
     ]);
+
+    log.info(`[Page: ${request.userData.page}]: Scraped ${events.length} events on ${request.url}`);
 });

@@ -1,19 +1,11 @@
-import { EVENT_API_URL_PREFIX, EVENT_URL_PREFIX, IMAGE_URL_PREFIX } from './const.js';
-import type { EventURLOptions } from './types.js';
+import { EVENT_API_URL_PREFIX, PAGE_LIMIT } from './const.js';
+import type { EventUrlOptions } from './types.js';
 
-export function getEventLink(eventId: string): string {
-    return `${EVENT_URL_PREFIX}/${eventId}`;
-}
-
-export function getImageURL(eventId: string, shareImage: string): string {
-    return `${IMAGE_URL_PREFIX}/${eventId}/${shareImage}.jpg`;
-}
-
-export function buildEventURL({ page = 0, since, till, limit = 100, cityId, categoryId }: EventURLOptions = {}) {
+export function buildEventUrl({ page = 0, since, till, cityId, categoryId }: EventUrlOptions = {}) {
     const queryParams = new URLSearchParams();
 
     queryParams.append('page', String(page));
-    queryParams.append('perPage', String(limit));
+    queryParams.append('perPage', String(PAGE_LIMIT));
     queryParams.append('cityId', cityId ?? '');
     queryParams.append('categories', categoryId ?? '');
     queryParams.append('since', since ?? '');

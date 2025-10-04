@@ -3,7 +3,7 @@ export interface Input {
     till: string | undefined;
 }
 
-export interface EventURLOptions {
+export interface EventUrlOptions {
     page?: number;
     since?: string;
     till?: string;
@@ -69,4 +69,10 @@ interface EventData {
  */
 export interface EventResponse {
     Event: EventData;
+}
+
+export interface UserData {
+    page: number;
+    since?: string;
+    till?: string;
 }

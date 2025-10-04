@@ -2,29 +2,29 @@ import { Actor } from 'apify';
 import { CheerioCrawler } from 'crawlee';
 
 import { router } from './routes.js';
-import type { Input } from './types.js';
-import { buildEventURL, rawToLocalISOString } from './utils.js';
+import type { Input, UserData } from './types.js';
+import { buildEventUrl, rawToLocalISOString } from './utils.js';
 
 await Actor.init();
 
-// Parse input
-const { since, till } = (await Actor.getInput()) as Input;
+const { since, till } = (await Actor.getInput<Input>())!;
 const sinceISO = rawToLocalISOString(since, false);
 const tillISO = rawToLocalISOString(till, true);
 
 const crawler = new CheerioCrawler({
+    maxConcurrency: 3,
+    proxyConfiguration: await Actor.createProxyConfiguration(),
     requestHandler: router,
 });
 
-const initUrl = buildEventURL({ since: sinceISO, till: tillISO });
 await crawler.run([
     {
-        url: initUrl,
+        url: buildEventUrl({ since: sinceISO, till: tillISO }),
         userData: {
             page: 0,
             since: sinceISO,
             till: tillISO,
-        },
+        } as UserData,
     },
 ]);
 

@@ -4,17 +4,17 @@
         "overview": {
             "title": "Overview",
             "transformation": {
-                "flatten": ["event", "location", "contacts", "misc"],
+                "flatten": ["location", "contacts"],
                 "fields": [
-                    "misc.imageUrl",
-                    "event.name",
-                    "event.about",
-                    "event.begin",
-                    "event.end",
-                    "event.link",
-                    "event.currency",
-                    "event.minPrice",
-                    "event.maxPrice",
+                    "name",
+                    "about",
+                    "begin",
+                    "end",
+                    "url",
+                    "currency",
+                    "minPrice",
+                    "maxPrice",
+                    "rankPosition",
                     "location.building",
                     "location.street",
                     "location.city",
@@ -22,21 +22,22 @@
                     "location.country",
                     "contacts.email",
                     "contacts.phone",
-                    "contacts.website"
+                    "contacts.website",
+                    "imageUrl"
                 ]
             },
             "display": {
                 "component": "table",
                 "properties": {
-                    "misc.imageUrl": { "label": "Image", "format": "image" },
-                    "event.name": { "label": "Event name", "format": "text" },
-                    "event.about": { "label": "About", "format": "text" },
-                    "event.begin": { "label": "Start", "format": "date" },
-                    "event.end": { "label": "End", "format": "date" },
-                    "event.link": { "label": "Source Link", "format": "link" },
-                    "event.currency": { "label": "Currency", "format": "text" },
-                    "event.minPrice": { "label": "Min price", "format": "number" },
-                    "event.maxPrice": { "label": "Max price", "format": "number" },
+                    "name": { "label": "Event name", "format": "text" },
+                    "about": { "label": "About", "format": "text" },
+                    "begin": { "label": "Start", "format": "date" },
+                    "end": { "label": "End", "format": "date" },
+                    "url": { "label": "Source Link", "format": "link" },
+                    "currency": { "label": "Currency", "format": "text" },
+                    "minPrice": { "label": "Min price", "format": "number" },
+                    "maxPrice": { "label": "Max price", "format": "number" },
+                    "rankPosition": { "label": "Rank Position", "format": "number" },
                     "location.building": { "label": "Venue", "format": "text" },
                     "location.street": { "label": "Address", "format": "text" },
                     "location.city": { "label": "City", "format": "text" },
@@ -44,7 +45,8 @@
                     "location.country": { "label": "Country", "format": "text" },
                     "contacts.email": { "label": "Contact email", "format": "text" },
                     "contacts.phone": { "label": "Contact phone", "format": "text" },
-                    "contacts.website": { "label": "Website", "format": "link" }
+                    "contacts.website": { "label": "Website", "format": "link" },
+                    "imageUrl": { "label": "Image", "format": "image" }
                 }
             }
         }
