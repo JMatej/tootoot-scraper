@@ -5,26 +5,21 @@
     "schemaVersion": 1,
     "properties": {
         "since": {
-            "title": "Since",
+            "title": "Start Date (Since)",
             "type": "string",
-            "description": "The start date for the event search (inclusive). Format: YYYY-MM-DD.",
-            "editor": "datepicker",
-            "nullable": true
-        },
-        "till": {
-            "title": "Till",
-            "type": "string",
-            "description": "The end date for the event search (inclusive). Format: YYYY-MM-DD.",
-            "editor": "datepicker",
-            "nullable": true
-        },
-        "relativeDate": {
-            "title": "Relative Date Period",
-            "type": "string",
-            "description": "Specify a period starting from today (e.g., '7 days', '1 month', '2 years').",
-            "nullable": true,
+            "description": "The start of the date range. Can be an absolute date or a relative period.",
             "editor": "datepicker",
             "dateType": "absoluteOrRelative",
+            "nullable": true,
+            "pattern": "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$|^(\\d+)\\s*(day|week|month|year)s?$"
+        },
+        "till": {
+            "title": "End Date (Till)",
+            "type": "string",
+            "description": "The end of the date range. Can be an absolute date or a relative period.",
+            "editor": "datepicker",
+            "dateType": "absoluteOrRelative",
+            "nullable": true,
             "pattern": "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$|^(\\d+)\\s*(day|week|month|year)s?$"
         }
     }
