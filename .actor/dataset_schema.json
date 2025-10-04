@@ -1,0 +1,54 @@
+{
+    "actorSpecification": 1,
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "flatten": ["location", "contacts"],
+                "fields": [
+                    "name",
+                    "about",
+                    "begin",
+                    "end",
+                    "url",
+                    "currency",
+                    "minPrice",
+                    "maxPrice",
+                    "rankPosition",
+                    "location.building",
+                    "location.street",
+                    "location.city",
+                    "location.zip",
+                    "location.country",
+                    "contacts.email",
+                    "contacts.phone",
+                    "contacts.website",
+                    "imageUrl"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "name": { "label": "Event name", "format": "text" },
+                    "about": { "label": "About", "format": "text" },
+                    "begin": { "label": "Start", "format": "date" },
+                    "end": { "label": "End", "format": "date" },
+                    "url": { "label": "Source Link", "format": "link" },
+                    "currency": { "label": "Currency", "format": "text" },
+                    "minPrice": { "label": "Min price", "format": "number" },
+                    "maxPrice": { "label": "Max price", "format": "number" },
+                    "rankPosition": { "label": "Rank Position", "format": "number" },
+                    "location.building": { "label": "Venue", "format": "text" },
+                    "location.street": { "label": "Address", "format": "text" },
+                    "location.city": { "label": "City", "format": "text" },
+                    "location.zip": { "label": "ZIP", "format": "text" },
+                    "location.country": { "label": "Country", "format": "text" },
+                    "contacts.email": { "label": "Contact email", "format": "text" },
+                    "contacts.phone": { "label": "Contact phone", "format": "text" },
+                    "contacts.website": { "label": "Website", "format": "link" },
+                    "imageUrl": { "label": "Image", "format": "image" }
+                }
+            }
+        }
+    }
+}

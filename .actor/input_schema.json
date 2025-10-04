@@ -1,0 +1,26 @@
+{
+    "title": "Tootoot.fm Input Schema",
+    "type": "object",
+    "description": "Specify the date range for the events. You can use either the absolute date range or a relative one. If a relative date is provided, it will take precedence.",
+    "schemaVersion": 1,
+    "properties": {
+        "since": {
+            "title": "Start Date (Since)",
+            "type": "string",
+            "description": "The start of the date range. Can be an absolute date or a relative period.",
+            "editor": "datepicker",
+            "dateType": "absoluteOrRelative",
+            "nullable": true,
+            "pattern": "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$|^(\\d+)\\s*(day|week|month|year)s?$"
+        },
+        "till": {
+            "title": "End Date (Till)",
+            "type": "string",
+            "description": "The end of the date range. Can be an absolute date or a relative period.",
+            "editor": "datepicker",
+            "dateType": "absoluteOrRelative",
+            "nullable": true,
+            "pattern": "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$|^(\\d+)\\s*(day|week|month|year)s?$"
+        }
+    }
+}
